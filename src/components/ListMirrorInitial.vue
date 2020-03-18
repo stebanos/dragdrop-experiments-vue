@@ -77,8 +77,8 @@
 
         onMove(event: any) {
             const lists = document.querySelectorAll('.list-group');
-            const list1 = lists[0].querySelectorAll(`.list-group-item[id$='${this.draggedId}']`);
-            const list2 = lists[1].querySelectorAll(`.list-group-item[id$='${this.draggedId}']`);
+            const list1 = lists[0].querySelectorAll(`.list-group-item[id$='_${this.draggedId}']`);
+            const list2 = lists[1].querySelectorAll(`.list-group-item[id$='_${this.draggedId}']`);
 
 /*            console.log('');
             list1.forEach((el, index) => {
