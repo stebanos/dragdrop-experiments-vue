@@ -5,6 +5,7 @@
         <a @click.prevent="item = 'initial'" :class="{ active: item === 'initial' }">Initial</a>
         <a @click.prevent="item = 'initialunrelated'" :class="{ active: item === 'initialunrelated' }">Initial / Unrelated</a>
         <a @click.prevent="item = 'halt'" :class="{ active: item === 'halt' }">Halt</a>
+        <a @click.prevent="item = 'haltstyle'" :class="{ active: item === 'haltstyle' }">Halt / Styling</a>
         <a @click.prevent="item = 'synced'" :class="{ active: item === 'synced' }">Synced</a>
       </nav>
     </header>
@@ -12,6 +13,7 @@
     <list-mirror-initial v-if="item === 'initial'" />
     <list-mirror-initial-and-unrelated v-else-if="item === 'initialunrelated'" />
     <list-mirror-halt v-else-if="item === 'halt'" />
+    <list-mirror-halt-style v-else-if="item === 'haltstyle'" />
     <list-mirror-synced v-else-if="item === 'synced'" />
   </div>
 </template>
@@ -20,6 +22,7 @@
 import ListMirrorInitial from './components/ListMirrorInitial.vue';
 import ListMirrorSynced from './components/ListMirrorSynced.vue';
 import ListMirrorHalt from './components/ListMirrorHalt.vue';
+import ListMirrorHaltStyle from './components/ListMirrorHaltStyle.vue';
 import ListMirrorInitialAndUnrelated from './components/ListMirrorInitialAndUnrelated.vue';
 
 export default {
@@ -30,11 +33,12 @@ export default {
                 initial: 'Mirrored List: Initial position',
                 initialunrelated: 'Mirror and Different List: Initial position',
                 halt: 'Lists: Don\'t allow moving between mirrored lists',
+                haltstyle: 'Lists: Styling disabled mirror list',
                 synced: 'Mirrored List: Lists stay in sync'
             }
         };
     },
-    components: { ListMirrorInitialAndUnrelated, ListMirrorInitial, ListMirrorHalt, ListMirrorSynced }
+    components: { ListMirrorInitialAndUnrelated, ListMirrorInitial, ListMirrorHalt, ListMirrorHaltStyle, ListMirrorSynced }
 };
 </script>
 
@@ -66,8 +70,9 @@ export default {
     border-bottom: 1px solid hsl(210, 40%, 70%);
   }
 
-  nav { display: flex;
-    width: 650px;
+  nav {
+    display: flex;
+    width: 810px;
     justify-content: space-evenly;
   }
 
@@ -83,6 +88,7 @@ export default {
     -o-user-select: none;
     user-select: none;
     cursor: pointer;
+    transition: background-color 200ms;
   }
 
   nav a.active {
