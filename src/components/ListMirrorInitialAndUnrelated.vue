@@ -182,7 +182,6 @@
     .main.dragging * {
         cursor: move;
         cursor: grabbing;
-        cursor: not-allowed;
     }
     .draggables {
         width: 800px;

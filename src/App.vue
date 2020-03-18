@@ -4,12 +4,14 @@
       <nav>
         <a @click.prevent="item = 'initial'" :class="{ active: item === 'initial' }">Initial</a>
         <a @click.prevent="item = 'initialunrelated'" :class="{ active: item === 'initialunrelated' }">Initial / Unrelated</a>
+        <a @click.prevent="item = 'halt'" :class="{ active: item === 'halt' }">Halt</a>
         <a @click.prevent="item = 'synced'" :class="{ active: item === 'synced' }">Synced</a>
       </nav>
     </header>
     <h1>{{ titles[item] }}</h1>
     <list-mirror-initial v-if="item === 'initial'" />
-    <list-mirror-initial-and-unrelated v-if="item === 'initialunrelated'" />
+    <list-mirror-initial-and-unrelated v-else-if="item === 'initialunrelated'" />
+    <list-mirror-halt v-else-if="item === 'halt'" />
     <list-mirror-synced v-else-if="item === 'synced'" />
   </div>
 </template>
@@ -17,20 +19,22 @@
 <script lang="ts">
 import ListMirrorInitial from './components/ListMirrorInitial.vue';
 import ListMirrorSynced from './components/ListMirrorSynced.vue';
-import ListMirrorInitialAndUnrelated from "@/components/ListMirrorInitialAndUnrelated.vue";
+import ListMirrorHalt from './components/ListMirrorHalt.vue';
+import ListMirrorInitialAndUnrelated from './components/ListMirrorInitialAndUnrelated.vue';
 
 export default {
     data: function() {
         return {
-            item: 'initialunrelated',
+            item: 'initial',
             titles: {
                 initial: 'Mirrored List: Initial position',
                 initialunrelated: 'Mirror and Different List: Initial position',
+                halt: 'Lists: Don\'t allow moving between mirrored lists',
                 synced: 'Mirrored List: Lists stay in sync'
             }
         };
     },
-    components: {ListMirrorInitialAndUnrelated, ListMirrorInitial, ListMirrorSynced }
+    components: { ListMirrorInitialAndUnrelated, ListMirrorInitial, ListMirrorHalt, ListMirrorSynced }
 };
 </script>
 
@@ -63,7 +67,7 @@ export default {
   }
 
   nav { display: flex;
-    width: 500px;
+    width: 650px;
     justify-content: space-evenly;
   }
 
