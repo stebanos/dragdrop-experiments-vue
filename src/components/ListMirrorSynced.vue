@@ -30,12 +30,12 @@
 
         private myData: string[] = [...myList];
         private myOrder: number[] = [];
-        private draggedIndex: number = -1;
-        private dragOverIndex: number = -1;
-        private initiatedDrag: string = '';
+        private draggedIndex = -1;
+        private dragOverIndex = -1;
+        private initiatedDrag = '';
 
-        private targetDraggable1: boolean = false;
-        private targetDraggable2: boolean = false;
+        private targetDraggable1 = false;
+        private targetDraggable2 = false;
 
         get draggable1Visible() {
             if (this.initiatedDrag === 'draggable2') {
@@ -111,7 +111,7 @@
         display: flex;
         justify-content: center;
     }
-    .main.dragging, .main.dragging * {
+    .main.dragging, .main.dragging *, .main.dragging >>> li {
         cursor: move;
         cursor: grabbing;
     }
@@ -142,5 +142,4 @@
         color: #999;
         background: #fff;
     }
-
 </style>

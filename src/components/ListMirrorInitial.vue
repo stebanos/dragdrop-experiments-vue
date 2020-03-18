@@ -38,7 +38,7 @@
 </template>
 
 <script lang="ts">
-    import {Component, Prop, Vue} from 'vue-property-decorator';
+    import {Component, Vue} from 'vue-property-decorator';
     import draggable from 'vuedraggable';
 
     @Component({
@@ -47,10 +47,15 @@
     })
     export default class ListMirrorInitial extends Vue {
 
-        private list1 = [{ title: 'News', id: 0 }, { title: 'Documentation', id: 1 }, { title: 'Forum', id: 2 }, { title: 'Community', id: 3 }, { title: 'About Us', id: 4}];
-        private draggedId: string = '';
-        private draggedIndex: number = -1;
-        private initiatedDrag: string = '';
+        private list1 = [
+            { title: 'News', id: 0 },
+            { title: 'Documentation', id: 1 },
+            { title: 'Forum', id: 2 },
+            { title: 'Community', id: 3 },
+            { title: 'About Us', id: 4}];
+        private draggedIndex = -1;
+        private draggedId = '';
+        private initiatedDrag = '';
 
         startDrag(event: any) {
             this.draggedId = event.item.id.substring(2);
@@ -61,8 +66,8 @@
 
         endDrag() {
             this.draggedIndex = -1;
-            this.initiatedDrag = '';
             this.draggedId = '';
+            this.initiatedDrag = '';
             document.querySelectorAll('.list-group-item').forEach((el: Element) => {
                 (el as HTMLElement).classList.remove('duplicate');
                 (el as HTMLElement).style.display = 'block';
@@ -123,7 +128,7 @@
         display: flex;
         justify-content: center;
     }
-    .main.dragging, .main.dragging * {
+    .main.dragging * {
         cursor: move;
         cursor: grabbing;
     }

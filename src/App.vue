@@ -6,8 +6,7 @@
         <a @click.prevent="item = 'synced'" :class="{ active: item === 'synced' }">Synced</a>
       </nav>
     </header>
-    <h1 v-if="item === 'initial'">Mirrored List: Initial position</h1>
-    <h1 v-else-if="item === 'synced'">Mirrored List: Lists stay in sync</h1>
+    <h1>{{ titles[item] }}</h1>
     <list-mirror-initial v-if="item === 'initial'" />
     <list-mirror-synced v-else-if="item === 'synced'" />
   </div>
@@ -20,7 +19,11 @@ import ListMirrorSynced from './components/ListMirrorSynced.vue';
 export default {
     data: function() {
         return {
-            item: 'initial'
+            titles: {
+                initial: 'Mirrored List: Initial position',
+                initialunrelated: 'Mirror and Different List: Initial position',
+                synced: 'Mirrored List: Lists stay in sync'
+            }
         };
     },
     components: { ListMirrorInitial, ListMirrorSynced }
@@ -56,16 +59,16 @@ export default {
   }
 
   nav { display: flex;
-    width: 300px;
+    width: 500px;
     justify-content: space-evenly;
   }
 
   nav a {
     display: inline-block;
-    width: 120px;
+    width: 150px;
     border: 1px solid rgba(255, 255, 255, 0.4);
     text-align: center;
-    padding: 2px 0;
+    padding: 4px;
     -moz-user-select: -moz-none;
     -khtml-user-select: none;
     -webkit-user-select: none;
