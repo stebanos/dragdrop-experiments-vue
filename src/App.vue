@@ -2,19 +2,16 @@
   <div id="app">
     <header>
       <nav>
-        <a @click.prevent="item = 'initial'" :class="{ active: item === 'initial' }">Initial</a>
-        <a @click.prevent="item = 'initialunrelated'" :class="{ active: item === 'initialunrelated' }">Initial / Unrelated</a>
-        <a @click.prevent="item = 'halt'" :class="{ active: item === 'halt' }">Halt</a>
-        <a @click.prevent="item = 'haltstyle'" :class="{ active: item === 'haltstyle' }">Halt / Styling</a>
-        <a @click.prevent="item = 'synced'" :class="{ active: item === 'synced' }">Synced</a>
+        <a v-for="item in Object.keys(items)" @click.prevent="activeItem = item" :class="{active: activeItem === item}">{{ items[item].link }}</a>
       </nav>
     </header>
-    <h1>{{ titles[item] }}</h1>
-    <list-mirror-initial v-if="item === 'initial'" />
-    <list-mirror-initial-and-unrelated v-else-if="item === 'initialunrelated'" />
-    <list-mirror-halt v-else-if="item === 'halt'" />
-    <list-mirror-halt-style v-else-if="item === 'haltstyle'" />
-    <list-mirror-synced v-else-if="item === 'synced'" />
+    <h1>{{ items[activeItem].title }}</h1>
+    <list-mirror-initial v-if="activeItem === 'initial'" />
+    <list-mirror-initial-and-unrelated v-else-if="activeItem === 'initialunrelated'" />
+    <list-mirror-halt v-else-if="activeItem === 'halt'" />
+    <list-mirror-halt-style v-else-if="activeItem === 'haltstyle'" />
+    <list-mirror-halt-style-clone v-else-if="activeItem === 'haltstyleclone'" />
+    <list-mirror-synced v-else-if="activeItem === 'synced'" />
   </div>
 </template>
 
@@ -23,22 +20,24 @@ import ListMirrorInitial from './components/ListMirrorInitial.vue';
 import ListMirrorSynced from './components/ListMirrorSynced.vue';
 import ListMirrorHalt from './components/ListMirrorHalt.vue';
 import ListMirrorHaltStyle from './components/ListMirrorHaltStyle.vue';
+import ListMirrorHaltStyleClone from './components/ListMirrorHaltStyleClone.vue';
 import ListMirrorInitialAndUnrelated from './components/ListMirrorInitialAndUnrelated.vue';
 
 export default {
     data: function() {
         return {
-            item: 'initial',
-            titles: {
-                initial: 'Mirrored List: Initial position',
-                initialunrelated: 'Mirror and Different List: Initial position',
-                halt: 'Lists: Don\'t allow moving between mirrored lists',
-                haltstyle: 'Lists: Styling disabled mirror list',
-                synced: 'Mirrored List: Lists stay in sync'
+            activeItem: 'initial',
+            items: {
+                initial: { title: 'Mirrored List: Initial position', link: 'Initial' },
+                initialunrelated: { title: 'Mirror and Different List: Initial position', link: 'Initial/Unrelated' },
+                halt: { title: 'Lists: Don\'t allow moving between mirrored lists', link: 'Halt' },
+                haltstyle: { title: 'Lists: Styling disabled mirror list', link: 'Halt/Styling' },
+                haltstyleclone: { title: 'Lists: Styling disabled mirror list + clone', link: 'Halt/Styling/Clone' },
+                synced: { title: 'Mirrored List: Lists stay in sync', link: 'Synced' }
             }
         };
     },
-    components: { ListMirrorInitialAndUnrelated, ListMirrorInitial, ListMirrorHalt, ListMirrorHaltStyle, ListMirrorSynced }
+    components: { ListMirrorInitialAndUnrelated, ListMirrorInitial, ListMirrorHalt, ListMirrorHaltStyle, ListMirrorHaltStyleClone, ListMirrorSynced }
 };
 </script>
 
@@ -72,8 +71,8 @@ export default {
 
   nav {
     display: flex;
-    width: 810px;
     flex-wrap: wrap;
+    width: 960px;
     justify-content: space-evenly;
   }
 
