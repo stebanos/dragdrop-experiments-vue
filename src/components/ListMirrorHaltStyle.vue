@@ -1,5 +1,5 @@
 <template>
-    <div id="main" class="main">
+    <div id="main" class="main" :class="mainClass">
         <div class="draggables">
             <div class="dragcontainer" @mouseover="mouseOver" @mouseout="mouseOut" :class="{ 'no-drop': bannedForDrop === 'draggable1_list1' }">
                 <draggable
@@ -87,6 +87,7 @@
         private draggedId = '';
         private initiatedDrag = '';
         private bannedForDrop = '';
+        private overElementId = '';
 
         startDrag(event: any) {
             this.draggedId = event.item.id.substring(2);
@@ -98,7 +99,6 @@
             } else if (this.initiatedDrag === 'draggable2_list1') {
                 this.bannedForDrop = 'draggable1_list1';
             }
-            document.querySelector('.main')!.classList.add('dragging');
         }
 
         endDrag() {
@@ -106,12 +106,7 @@
             this.draggedId = '';
             this.initiatedDrag = '';
             this.bannedForDrop = '';
-
-            document.querySelectorAll('.list-group-item').forEach((el: Element) => {
-                (el as HTMLElement).classList.remove('duplicate');
-                (el as HTMLElement).style.display = 'block';
-            });
-            document.querySelector('.main')!.classList.remove('dragging');
+            this.overElementId = '';
         }
 
         mouseOver(event: any) {
@@ -123,17 +118,15 @@
                 overElement = event.target;
             } else if (event.target.classList.contains('dragcontainer')) {
                 overElement = event.target.children[0];
+            } else {
+                overElement = null;
             }
-            if (overElement.id === this.bannedForDrop) {
-                document.querySelector('.main')!.classList.add('not-allowed');
-                return;
-            }
-            document.querySelector('.main')!.classList.remove('not-allowed');
+            this.overElementId = overElement ? overElement.id : '';
         }
 
         mouseOut(event: any) {
             if (!this.initiatedDrag) { return; }
-            document.querySelector('.main')!.classList.remove('not-allowed');
+            this.overElementId = '';
         }
 
         onMove(event: any) {
@@ -141,6 +134,13 @@
         }
 
         onChange(event: any) {
+        }
+
+        get mainClass() {
+            return {
+                'dragging': this.initiatedDrag !== '',
+                'not-allowed': this.bannedForDrop !== '' && this.overElementId === this.bannedForDrop
+            };
         }
     }
 </script>
@@ -193,11 +193,6 @@
         border: 1px solid hsl(225, 55%, 80%);
         list-style-type: none;
         cursor: default;
-    }
-    .list-group-item.duplicate {
-        background: #e6e6e6;
-        color: #aaa;
-        border: 1px dotted hsl(225, 15%, 80%);
     }
     .list-group-item.ghost {
         background: rgba(0, 0, 0, 0.1);
