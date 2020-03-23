@@ -163,4 +163,13 @@
     .list-group-item.drag {
         border: 1px solid #999;
     }
+    @media only screen and (max-width: 600px) {
+        .list-group-item {
+            width: 150px;
+            font-size: 0.8em;
+        }
+        .draggables {
+            width: 380px;
+        }
+    }
 </style>

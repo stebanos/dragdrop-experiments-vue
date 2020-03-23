@@ -142,4 +142,16 @@
         color: #999;
         background: #fff;
     }
+    @media only screen and (max-width: 600px) {
+        .dragcontainer {
+            width: 150px;
+            font-size: 0.8em;
+        }
+        >>> li {
+            width: 150px;
+        }
+        .draggables {
+            width: 380px;
+        }
+    }
 </style>

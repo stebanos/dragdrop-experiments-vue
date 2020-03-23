@@ -61,7 +61,7 @@ export default {
   }
 
   header {
-    height: 80px;
+    min-height: 60px;
     background-color: hsl(210, 30%, 55%);
     color: white;
     display: flex;
@@ -73,6 +73,7 @@ export default {
   nav {
     display: flex;
     width: 810px;
+    flex-wrap: wrap;
     justify-content: space-evenly;
   }
 
@@ -109,5 +110,28 @@ export default {
   h1 {
     padding: 60px 0 20px 0;
     color: #666;
+  }
+
+  @media only screen and (max-width: 800px) {
+    header {
+      min-height: 100px;
+    }
+    nav {
+      justify-content: center;
+    }
+    nav a {
+      margin: 6px;
+    }
+    h1 {
+      font-size: 1.3em;
+    }
+  }
+  @media only screen and (max-width: 600px) {
+    header {
+      min-height: 150px;
+    }
+    h1 {
+      padding: 40px 0 20px 0;
+    }
   }
 </style>

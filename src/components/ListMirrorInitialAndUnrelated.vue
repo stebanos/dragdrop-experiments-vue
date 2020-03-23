@@ -220,4 +220,17 @@
         max-width: 75%;
         color: orangered;
     }
+    @media only screen and (max-width: 600px) {
+        .list-group-item {
+            width: 110px;
+            font-size: 0.8em;
+        }
+        .draggables {
+            width: 380px;
+        }
+        .notice {
+            top: unset;
+            bottom: 24px;
+        }
+    }
 </style>
